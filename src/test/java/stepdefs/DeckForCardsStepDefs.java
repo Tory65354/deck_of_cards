@@ -8,13 +8,11 @@ import requester.DeckRequester;
 
 public class DeckForCardsStepDefs {
 
-    private DeckRequester deckRequester;
+    private DeckRequester deckRequester = new DeckRequester();
     private String deckId;
     private int initialCardCount;
 
-    public DeckForCardsStepDefs(DeckRequester deckRequester) {
-        this.deckRequester = deckRequester;
-    }
+
 
     @Given("a new shuffled deck with {int} deck")
     public void create_new_shuffled_deck(Integer deckCount) {
