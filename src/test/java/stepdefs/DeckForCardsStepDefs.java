@@ -49,4 +49,20 @@ public class DeckForCardsStepDefs {
         boolean allAces = deckRequester.verifyAllDrawnCardsAreAces(deckId);
         Assert.assertTrue("All drawn cards are aces", allAces);
     }
+
+    @Given("a new shuffled {int} deck")
+    public void create_new_shuffled_one_deck(Integer deckCount) {
+        deckId = deckRequester.createShuffledDeck(deckCount);
+    }
+
+    @When("we drawing {int} specific cards from the bottom of the deck")
+    public void draw_specific_cards_from_bottom (Integer cardCount) {
+        deckRequester.drawCardsFromBottom(deckId, cardCount);
+    }
+
+    @Then("the remaining card count in the deck should be {int}")
+    public void verify_remaining_card_count_in_deck(int expectedRemainingCardCount) {
+        int actualRemainingCardCount = deckRequester.getRemainingCardCount(deckId);
+        Assert.assertEquals("Unexpected remaining card count", expectedRemainingCardCount, actualRemainingCardCount);
+    }
 }

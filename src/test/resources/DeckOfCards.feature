@@ -21,5 +21,11 @@ Feature: Checking the card count in the deck and card types
       When we drawing all cards from deck
       Then all drawn cards should be aces
 
+      Scenario: Drawing 5 specific cards from the bottom of the deck
+        Given a new shuffled 1 deck
+        When we drawing 5 specific cards from the bottom of the deck
+        Then the remaining card count in the deck should be 47
+        And the drawn cards are no longer in the deck
+
 
 

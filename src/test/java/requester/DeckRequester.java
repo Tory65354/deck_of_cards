@@ -47,5 +47,10 @@ public class DeckRequester {
         }
         return true;
     }
+
+    public void drawCardsFromBottom(String deckId, int cardCount) {
+        RestAssured.get("https://deckofcardsapi.com/api/deck/" + deckId + "/draw/bottom/?count=" + cardCount);
+    }
+
 }
 
