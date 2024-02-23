@@ -6,12 +6,14 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import requester.DeckRequester;
 
+import java.util.List;
+
 public class DeckForCardsStepDefs {
 
     private DeckRequester deckRequester = new DeckRequester();
     private String deckId;
     private int initialCardCount;
-
+    private List<String> drawnCards;
 
 
     @Given("a new shuffled deck with {int} deck")
@@ -54,8 +56,8 @@ public class DeckForCardsStepDefs {
     }
 
     @When("we drawing {int} specific cards from the bottom of the deck")
-    public void draw_specific_cards_from_bottom (Integer cardCount) {
-        deckRequester.drawCardsFromBottom(deckId, cardCount);
+    public void draw_specific_cards_from_bottom(Integer cardCount) {
+        drawnCards = deckRequester.drawCardsFromBottom(deckId, cardCount);
     }
 
     @Then("the remaining card count in the deck should be {int}")
@@ -63,4 +65,12 @@ public class DeckForCardsStepDefs {
         int actualRemainingCardCount = deckRequester.getRemainingCardCount(deckId);
         Assert.assertEquals("Unexpected remaining card count", expectedRemainingCardCount, actualRemainingCardCount);
     }
+
+
+    @Then("the drawn cards are no longer in the deck")
+    public void verify_drawn_cards_not_in_deck() {
+        boolean cardsNotInDeck = deckRequester.verifyDrawnCardsNotInDeck(deckId, drawnCards);
+        Assert.assertTrue("All drawn cards aren't longer in the deck", cardsNotInDeck);
+    }
 }
+

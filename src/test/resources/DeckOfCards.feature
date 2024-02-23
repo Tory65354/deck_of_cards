@@ -16,16 +16,16 @@ Feature: Checking the card count in the deck and card types
     When we drawing 5 cards from the deck
     Then the remaining card count in the deck 307
 
-    Scenario: Creating a new deck containing only Aces and validating that player can only get aces from it
-      Given a new shuffled deck with 6 decks containing only aces
-      When we drawing all cards from deck
-      Then all drawn cards should be aces
+  Scenario: Creating a new deck containing only Aces and validating that player can only get aces from it
+    Given a new shuffled deck with 6 decks containing only aces
+    When we drawing all cards from deck
+    Then all drawn cards should be aces
 
-      Scenario: Drawing 5 specific cards from the bottom of the deck
-        Given a new shuffled 1 deck
-        When we drawing 5 specific cards from the bottom of the deck
-        Then the remaining card count in the deck should be 47
-        And the drawn cards are no longer in the deck
+  Scenario: Drawing 5 specific cards from the bottom of the deck
+    Given a new shuffled 1 deck
+    When we drawing 5 specific cards from the bottom of the deck
+    Then the remaining card count in the deck should be 47
+    And the drawn cards are no longer in the deck
 
 
 
