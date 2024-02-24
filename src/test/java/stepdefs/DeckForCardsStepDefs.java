@@ -53,11 +53,14 @@ public class DeckForCardsStepDefs {
     @Given("a new shuffled {int} deck")
     public void create_new_shuffled_one_deck(Integer deckCount) {
         deckId = deckRequester.createShuffledDeck(deckCount);
+        initialCardCount = deckRequester.getRemainingCardCount(deckId);
     }
 
-    @When("we drawing {int} specific cards from the bottom of the deck")
-    public void draw_specific_cards_from_bottom(Integer cardCount) {
-        drawnCards = deckRequester.drawCardsFromBottom(deckId, cardCount);
+    @When("we drawing 5 specific cards from the bottom of the deck")
+    public void draw_specific_cards_from_bottom() {
+      List<String> bottomCards = deckRequester.drawCardsFromBottom(deckId,5);
+      deckRequester.drawCardsFromDeck(deckId,5);
+      drawnCards = bottomCards;
     }
 
     @Then("the remaining card count in the deck should be {int}")
@@ -68,9 +71,10 @@ public class DeckForCardsStepDefs {
 
 
     @Then("the drawn cards are no longer in the deck")
-    public void verify_drawn_cards_not_in_deck() {
-        boolean cardsNotInDeck = deckRequester.verifyDrawnCardsNotInDeck(deckId, drawnCards);
-        Assert.assertTrue("All drawn cards aren't longer in the deck", cardsNotInDeck);
+    public void verify_drawn_cards_in_deck() {
+        for (String card : drawnCards) {
+            Assert.assertFalse("Drawn card in the deck", deckRequester.verifyCardInDeck(deckId, card));
+        }
     }
 }
 
