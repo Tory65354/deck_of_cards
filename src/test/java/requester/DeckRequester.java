@@ -2,7 +2,6 @@ package requester;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.checkerframework.common.subtyping.qual.Bottom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ public class DeckRequester {
     public List<Map<String, String>> drawCardsFromDeck(String deckId, int count) {
         Response response = RestAssured.get(URL + deckId + "/draw/?count=" + count);
         return response.jsonPath().getList("cards");
-
     }
 
     public int getRemainingCardCount(String deckId) {
@@ -42,7 +40,7 @@ public class DeckRequester {
     }
 
     public boolean verifyAllDrawnCardsAreAces(String deckId) {
-       List<Map<String,String>> drawnCards = drawCardsFromDeck(deckId, 52);
+        List<Map<String, String>> drawnCards = drawCardsFromDeck(deckId, 52);
 
         for (Map<String, String> card : drawnCards) {
             String value = card.get("value");
@@ -53,16 +51,15 @@ public class DeckRequester {
         return true;
     }
 
-   public  List<String> drawCardsFromBottom(String deckId, int count) {
-      List<String> bottomCards = new ArrayList<>();
-      for (int i=0; i < count; i++) {
-          Response response = RestAssured.get(URL + deckId + "/draw/bottom/");
-          String cardCode = response.jsonPath().getString("cards[0].code");
-          bottomCards.add(cardCode);
+    public List<String> drawCardsFromBottom(String deckId, int count) {
+        List<String> bottomCards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            Response response = RestAssured.get(URL + deckId + "/draw/bottom/");
+            String cardCode = response.jsonPath().getString("cards[0].code");
+            bottomCards.add(cardCode);
         }
         return bottomCards;
-   }
-
+    }
 
     public boolean verifyCardInDeck(String deckId, String cardCode) {
         Response response = RestAssured.get(URL + deckId + "/");
