@@ -1,23 +1,20 @@
 package stepdefs;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.Assert;
-import org.junit.runner.RunWith;
 import requester.DeckRequester;
-
 import java.util.List;
 
-
-@RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/features",
-        glue = "stepdefs",
-        plugin = {"pretty", "json:target/cucumber.json", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
-)
+                features = "src/test/resources/functionalTests",
+                glue= {"stepDefinitions"},
+                plugin = { "pretty", "html:target/cucumber-reports" },
+                monochrome = true
+        )
+
+
 public class DeckForCardsStepDefs {
 
     private DeckRequester deckRequester = new DeckRequester();
