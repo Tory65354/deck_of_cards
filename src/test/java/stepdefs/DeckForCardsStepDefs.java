@@ -12,11 +12,9 @@ import requester.DeckRequester;
 import java.util.List;
 
 
-//@CucumberOptions(
-  //      plugin = {"json:target/cucumber.json"},
-   //     features = "src/test/resources/features",
-     //   glue = "step_definitions"
-//)
+@CucumberOptions(
+        plugin = {"json:target/cucumber.json"}
+)
 
 
 public class DeckForCardsStepDefs {
@@ -69,39 +67,25 @@ public class DeckForCardsStepDefs {
 
     @When("we drawing 5 specific cards from the bottom of the deck")
     public void draw_specific_cards_from_bottom() {
-        try {
-            List<String> bottomCards = deckRequester.drawCardsFromBottom(deckId, 5);
-            deckRequester.drawCardsFromDeck(deckId, 5);
-            drawnCards = bottomCards;
-        } catch (Exception e) {
-            System.out.println("An error occurred while drawing specific cards from the bottom: " + e.getMessage());
-        }
+
+        List<String> bottomCards = deckRequester.drawCardsFromBottom(deckId, 5);
+        deckRequester.drawCardsFromDeck(deckId, 5);
+        drawnCards = bottomCards;
     }
 
     @Then("the remaining card count in the deck should be {int}")
     public void verify_remaining_card_count_in_deck(int expectedRemainingCardCount) {
-        try {
-            int actualRemainingCardCount = deckRequester.getRemainingCardCount(deckId);
-            Assert.assertEquals("Unexpected remaining card count", expectedRemainingCardCount, actualRemainingCardCount);
-        } catch (AssertionError e) {
-            System.out.println("Assertion error occured:" + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("An error occurred while verifying remaining card count in deck: " + e.getMessage());
-        }
+        int actualRemainingCardCount = deckRequester.getRemainingCardCount(deckId);
+        Assert.assertEquals("Unexpected remaining card count", expectedRemainingCardCount, actualRemainingCardCount);
+
     }
 
     @Then("the drawn cards are no longer in the deck")
     public void verify_drawn_cards_in_deck() {
-        try {
-            if (drawnCards != null) {
-                for (String card : drawnCards) {
-                    Assert.assertFalse("Drawn card in the deck", deckRequester.verifyCardInDeck(deckId, card));
-                }
-            } else {
-                System.out.println("No cards were drawn from the deck.");
+        if (drawnCards != null) {
+            for (String card : drawnCards) {
+                Assert.assertFalse("Drawn card in the deck", deckRequester.verifyCardInDeck(deckId, card));
             }
-        } catch (Exception e) {
-            System.out.println("An error occurred while verifying drawn cards in deck: " + e.getMessage());
         }
     }
 }
