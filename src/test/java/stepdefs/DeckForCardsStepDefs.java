@@ -3,10 +3,8 @@ package stepdefs;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.Assert;
-import org.junit.runner.RunWith;
 import requester.DeckRequester;
 
 import java.util.List;
